@@ -1,0 +1,35 @@
+name: ${file(serverless.yml):service.name}-GraphQl
+authenticationType: AMAZON_COGNITO_USER_POOLS
+userPoolConfig:
+  userPoolId:
+    Ref: CognitoUserPool
+  defaultAction: ALLOW
+
+mappingTemplates:
+  - dataSource: lambdaResolver
+    type: Query
+    field: lambda
+    request: "lambda-request-invoke.vtl"
+    response: "lambda-response.vtl"
+  - dataSource: posts
+    type: Query
+    field: posts
+    request: Query.posts.request.vtl
+    response: Query.posts.response.vtl
+  - dataSource: posts
+    type: Mutation
+    field: addPost
+    request: Mutation.addPost.request.vtl
+    response: Mutation.addPost.response.vtl
+
+dataSources:
+  - type: AWS_LAMBDA
+    name: lambdaResolver
+    description: 'A Lambda Resolver'
+    config:
+      functionName: lambdaResolver
+  - type: AMAZON_DYNAMODB
+    name: posts
+    description: "Example table"
+    config:
+      tableName: ${self:provider.stage}-${self:service.name}-example

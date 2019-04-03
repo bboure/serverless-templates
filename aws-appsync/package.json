@@ -1,0 +1,39 @@
+{
+  "name": "aws-appsync",
+  "description": "Aws AppSync template",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "sls offline start --stage local",
+    "test": "jest --notify --silent --watch"
+  },
+  "author": "bboure",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
+    "babel-loader": "^8.0.0",
+    "eslint": "^5.15.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.1.0",
+    "path": "^0.12.7",
+    "serverless-appsync-offline": "^1.1.2",
+    "serverless-appsync-plugin": "^1.0.4",
+    "serverless-dynamodb-local": "0.2.35",
+    "serverless-iam-roles-per-function": "^1.0.2",
+    "serverless-offline": "^4.5.1",
+    "serverless-webpack": "^5.1.5",
+    "webpack": "^4.12.0",
+    "webpack-node-externals": "^1.7.2"
+  }
+}

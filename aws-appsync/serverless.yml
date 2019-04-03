@@ -1,0 +1,62 @@
+service:
+  name: aws-appsync
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-appsync-plugin
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-appsync-offline
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: eu-west-1
+  memorySize: 128
+  stage: ${opt:stage, 'dev'}
+
+functions: ${file(functions.yml)}
+
+custom:
+  appSync: ${file(graphql.yml)}
+  dynamodb:
+    start:
+      port: 8000
+      migrate: true
+      seed: true
+  appsync-emulator:
+    buildPrefix: .webpack/service
+  appsync-offline:
+    showLogs: true
+    port: 62222
+    dynamodb:
+      client:
+        endpoint: http://localhost:8000
+        region: localhost
+  webpack:
+    includeModules:
+      forceExclude:
+        - aws-sdk
+
+resources:
+  - ${file(tables.yml)}
+  - Resources:
+      CognitoUserPool:
+        Type: AWS::Cognito::UserPool
+        DeletionPolicy: Retain
+        Properties:
+          UserPoolName: ${self:service.name}-${self:provider.stage}
+          AutoVerifiedAttributes:
+            - email
+          UsernameAttributes:
+            - email
+
+      WebUserPoolClient:
+        Type: AWS::Cognito::UserPoolClient
+        Properties:
+            ClientName: Web
+            GenerateSecret: false
+            RefreshTokenValidity: 30
+            UserPoolId:
+              Ref: CognitoUserPool

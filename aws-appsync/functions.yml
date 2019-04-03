@@ -1,0 +1,2 @@
+lambdaResolver:
+  handler: functions/lambda.handler

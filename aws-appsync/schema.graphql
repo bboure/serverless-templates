@@ -1,0 +1,32 @@
+type Query {
+	lambda: String!
+  posts(handle: String!): Posts
+}
+
+type Mutation {
+  addPost(post: PostInput): Post!
+}
+
+type Posts {
+  items: [Post]
+  nextToken: String
+}
+
+type Post {
+  id: ID!
+  handle: String!
+  timestamp: Int!
+  title: String!
+  content: String!
+}
+
+input PostInput {
+  handle: String!
+  title: String!
+  content: String!
+}
+
+schema {
+	query: Query
+  mutation: Mutation
+}
